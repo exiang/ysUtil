@@ -10,7 +10,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "html2text/html2text": "^4.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
     },

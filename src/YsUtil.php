@@ -7,6 +7,14 @@ class YsUtil
         return $bool;
     }
 
+    public function html2text($html)
+	{
+		$h2t = new \Html2Text\Html2Text($html);
+		$buffer = $h2t->get_text();
+		
+		return $buffer;
+	}
+
     public function splitFullName2FirstLast($name)
 	{
 		$parts = explode(" ", $name);
