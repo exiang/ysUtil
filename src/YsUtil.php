@@ -78,7 +78,7 @@ class YsUtil
 	
 	public function timezone2offset($name)
 	{
-		$dateTime = new DateTime(); 
+		$dateTime = new \DateTime(); 
 		$dateTime->setTimeZone(new DateTimeZone($name)); 
 		return $dateTime->format('P'); 
 	}
@@ -88,11 +88,11 @@ class YsUtil
 	public function convertTimezone($timestamp, $toTimezone, $fromTimezone='GMT')
 	{
 		// convert timestamp fromTimezone to gmt first
-		$date = new DateTime(null, new DateTimeZone($fromTimezone));
+		$date = new \DateTime(null, new \DateTimeZone($fromTimezone));
 		$date->setTimestamp($timestamp);
 		
 		// convert gmt timestamp to toTimezone
-		$date->setTimezone(new DateTimeZone($toTimezone));
+		$date->setTimezone(new \DateTimeZone($toTimezone));
 		return strtotime($date->format('Y-M-d H:i:s'));
 	}
 	
@@ -603,7 +603,7 @@ class YsUtil
 		
 		if($mode == '2d')
 		{
-			$result = ysUtil::convert1dTo2dArray($result);
+			$result = self::convert1dTo2dArray($result);
 		}
 		return $result;
 	}
@@ -621,7 +621,7 @@ class YsUtil
 	// number start from 1 to 12
 	public function monthNumber2Name($number, $format='F')
 	{
-		$dateObj = DateTime::createFromFormat('!m', $number);
+		$dateObj = \DateTime::createFromFormat('!m', $number);
 		return $dateObj->format($format);
 	}
 	
