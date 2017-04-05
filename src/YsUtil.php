@@ -79,7 +79,7 @@ class YsUtil
 	public function timezone2offset($name)
 	{
 		$dateTime = new \DateTime(); 
-		$dateTime->setTimeZone(new DateTimeZone($name)); 
+		$dateTime->setTimeZone(new \DateTimeZone($name)); 
 		return $dateTime->format('P'); 
 	}
 	
