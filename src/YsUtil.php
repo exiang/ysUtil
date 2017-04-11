@@ -7,6 +7,113 @@ class YsUtil
         return $bool;
     }
 
+	/*
+		$smtpParams['smtpHost'] 
+		$smtpParams['smtpSecure'] 
+		$smtpParams['smtpPort'] 
+		$smtpParams['smtpAuth']
+		$smtpParams['smtpUsername'] 
+		$smtpParams['smtpPassword'] 
+		$smtpParams['smtpSenderEmail'] 
+		$smtpParams['smtpSenderName'] 
+		$smtpParams['emailPrefix'] 
+		$smtpParams['blockSendMail'] 
+		$smtpParams['logSentMail'] 
+	*/
+	public function sendMail($receivers, $subject, $message, $smtpParams, $sendOnBehalf='')
+	{
+		try
+		{
+			$mail = new \PHPMailer;
+			$mail->CharSet = "utf-8";
+			$mail->IsHTML(true);
+			$mail->IsSMTP();
+			$mail->Host = $smtpParams['smtpHost'];
+			$mail->Secure = $smtpParams['smtpSecure'];
+			$mail->Port = $smtpParams['smtpPort'];
+			$mail->SMTPAuth = $smtpParams['smtpAuth'];
+			$mail->SMTPSecure = $smtpParams['smtpSecure'];
+			$mail->Username = $smtpParams['smtpUsername'];
+			$mail->Password = $smtpParams['smtpPassword'];
+			if(!empty($sendOnBehalf)) 
+			{
+				$mail->SetFrom($sendOnBehalf, $sendOnBehalf);
+			}
+			else
+			{
+				$mail->SetFrom($smtpParams['smtpSenderEmail'], $smtpParams['smtpSenderName']);
+			}
+			
+			$mail->Subject = !empty($smtpParams['emailPrefix']) ? sprintf("[%s] %s", $smtpParams['emailPrefix'], $subject) : $subject;
+			$mail->MsgHTML($message);
+			$mail->AltBody = self::html2text($message);
+			
+			if(!empty($receivers) && is_array($receivers))
+			{
+				foreach($receivers as $receiver)
+				{
+					if(isset($receiver['method']) && strtolower($receiver['method']) == 'cc')
+					{
+						$mail->AddCC($receiver['email'], $receiver['name']);
+					}
+					else if(isset($receiver['method']) && strtolower($receiver['method']) == 'bcc')
+					{
+						$mail->AddBCC($receiver['email'], $receiver['name']);
+					}
+					else if(isset($receiver['method']) && strtolower($receiver['method']) == 'reply')
+					{
+						$mail->AddReplyTo($receiver['email'], $receiver['name']);
+					}
+					else
+					{
+						$mail->AddAddress($receiver['email'], $receiver['name']);
+					}
+				}			
+			}
+			else
+			{
+				throw new Exception('Invalid receivers data format');
+			}
+			
+			// log sent mail
+			if($smtpParams['logSentMail'])
+			{
+				self::logSentMail($mail, $smtpParams['mailLogPath']);
+			}
+			
+			// if not block, can send email out
+			if($smtpParams['blockSendMail'] !== true)
+			{
+				if(!($mail->Send()))
+				{
+					return $mail->ErrorInfo;
+				}
+			}
+			
+			return true;
+		}
+		catch(Exception $e)
+		{
+			return $e->getMessage();
+		}
+	}
+
+	public function logSentMail($mailObj, $mailLogPath)
+	{
+		$now = time();
+		
+		$receivers = $mailObj->getAllRecipients();
+		if(count($receivers) > 0)
+		{
+			foreach($receivers as $receiver=>$unknown)
+			{
+				if(!file_exists($mailLogPath)){mkdir($mailLogPath);}
+				$mailLogFile = $mailLogPath.DIRECTORY_SEPARATOR.$now.'.'.$receiver.'.eml';
+				file_put_contents($mailLogFile, "{$mailObj->Subject}\n\n{$mailObj->Body}");
+			}
+		}
+	}
+
     public function html2text($html)
 	{
 		$h2t = new \Html2Text\Html2Text($html);
