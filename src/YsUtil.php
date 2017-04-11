@@ -45,7 +45,7 @@ class YsUtil
 			}
 			
 			$mail->Subject = !empty($smtpParams['emailPrefix']) ? sprintf("[%s] %s", $smtpParams['emailPrefix'], $subject) : $subject;
-			$mail->MsgHTML($message);
+			$mail->msgHTML($message);
 			$mail->AltBody = self::html2text($message);
 			
 			if(!empty($receivers) && is_array($receivers))
@@ -102,7 +102,7 @@ class YsUtil
 	{
 		$now = time();
 		
-		$receivers = $mailObj->getAllRecipients();
+		$receivers = $mailObj->all_recipients;
 		if(count($receivers) > 0)
 		{
 			foreach($receivers as $receiver=>$unknown)
