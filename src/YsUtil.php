@@ -102,7 +102,7 @@ class YsUtil
 	{
 		$now = time();
 		
-		$receivers = $mailObj->all_recipients;
+		$receivers = $mailObj->getAllRecipientAddresses();
 		if(count($receivers) > 0)
 		{
 			foreach($receivers as $receiver=>$unknown)
