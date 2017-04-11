@@ -18,7 +18,7 @@ class YsUtilTest extends PHPUnit_Framework_TestCase {
 		$smtpParams['smtpPassword'] = 'AvJX5bpsot1AsfgKW/TwAntMhPReN8cka67f2sNXR0tb'; 
 		$smtpParams['smtpSenderEmail'] = 'exiang83@yahoo.com'; 
 		$smtpParams['smtpSenderName'] = 'Tan Yee Siang'; 
-		$smtpParams['emailPrefix'] = '[YsUtilTest]'; 
+		$smtpParams['emailPrefix'] = 'YsUtilTest'; 
 		$smtpParams['blockSendMail'] = false; 
 		$smtpParams['logSentMail'] = false;
         $this->assertTrue($ysUtil->sendMail($receivers, $subject, $message, $smtpParams));

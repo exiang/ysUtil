@@ -1,5 +1,7 @@
-<?php namespace Exiang\YsUtil;
- 
+<?php 
+namespace Exiang\YsUtil;
+use Exception;
+
 class YsUtil 
 {
     public function hasCheese($bool=true)
@@ -72,7 +74,7 @@ class YsUtil
 			}
 			else
 			{
-				throw new Exception('Invalid receivers data format');
+				throw new \Exception('Invalid receivers data format');
 			}
 			
 			// log sent mail
