@@ -283,8 +283,33 @@ class YsUtil
 		return sprintf('%.' . $decimals . 'f '.$unit, $value);
 	}
 	
-	
-	public function generateRandomPassword($max='8', $min='8', $lowerCase=false)
+	// mode: alphanumeric, alpha, numeric
+	public function generateRandomKey($max=5, $min=4, $mode='alphanumeric') 
+	{
+		$limit = rand($min, $max);
+		if($mode == 'alpha')
+		{
+			$pool = array_merge(range('a', 'z'));
+		}
+		else if($mode == 'numeric')
+		{
+			$pool = array_merge(range(0,9));
+		}
+		else
+		{
+			$pool = array_merge(range(0,9), range('a', 'z'));
+		}
+
+		for($i=0; $i<$limit; $i++) 
+		{
+			$key .= $pool[mt_rand(0, count($pool) - 1)];
+		}
+		return $key;
+	}
+
+
+	// generate password of combination between number and lower case alphabet
+	public function generateRandomPassword($max='8', $min='8', $lowerCase=true)
 	{
 		$limit = rand($min, $max);
 		$buffer = '';
