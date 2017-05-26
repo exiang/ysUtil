@@ -10,19 +10,19 @@ class YsUtil
     }
 
 	/*
-		$smtpParams['smtpHost'] 
-		$smtpParams['smtpSecure'] 
-		$smtpParams['smtpPort'] 
-		$smtpParams['smtpAuth']
-		$smtpParams['smtpUsername'] 
-		$smtpParams['smtpPassword'] 
-		$smtpParams['smtpSenderEmail'] 
-		$smtpParams['smtpSenderName'] 
-		$smtpParams['emailPrefix'] 
-		$smtpParams['blockSendMail'] 
-		$smtpParams['logSentMail'] 
+		$params['smtpHost'] 
+		$params['smtpSecure'] 
+		$params['smtpPort'] 
+		$params['smtpAuth']
+		$params['smtpUsername'] 
+		$params['smtpPassword'] 
+		$params['smtpSenderEmail'] 
+		$params['smtpSenderName'] 
+		$params['emailPrefix'] 
+		$params['blockSendMail'] 
+		$params['logSentMail'] 
 	*/
-	public function sendMail($receivers, $subject, $message, $smtpParams, $sendOnBehalf='')
+	public function sendMail($receivers, $subject, $message, $params, $sendOnBehalf='')
 	{
 		try
 		{
@@ -30,25 +30,45 @@ class YsUtil
 			$mail->CharSet = "utf-8";
 			$mail->IsHTML(true);
 			$mail->IsSMTP();
-			$mail->Host = $smtpParams['smtpHost'];
-			$mail->Secure = $smtpParams['smtpSecure'];
-			$mail->Port = $smtpParams['smtpPort'];
-			$mail->SMTPAuth = $smtpParams['smtpAuth'];
-			$mail->SMTPSecure = $smtpParams['smtpSecure'];
-			$mail->Username = $smtpParams['smtpUsername'];
-			$mail->Password = $smtpParams['smtpPassword'];
+			$mail->Host = $params['smtpHost'];
+			$mail->Secure = $params['smtpSecure'];
+			$mail->Port = $params['smtpPort'];
+			$mail->SMTPAuth = $params['smtpAuth'];
+			$mail->SMTPSecure = $params['smtpSecure'];
+			$mail->Username = $params['smtpUsername'];
+			$mail->Password = $params['smtpPassword'];
 			if(!empty($sendOnBehalf)) 
 			{
 				$mail->SetFrom($sendOnBehalf, $sendOnBehalf);
 			}
 			else
 			{
-				$mail->SetFrom($smtpParams['smtpSenderEmail'], $smtpParams['smtpSenderName']);
+				$mail->SetFrom($params['smtpSenderEmail'], $params['smtpSenderName']);
 			}
 			
-			$mail->Subject = !empty($smtpParams['emailPrefix']) ? sprintf("[%s] %s", $smtpParams['emailPrefix'], $subject) : $subject;
+			$mail->Subject = !empty($params['emailPrefix']) ? sprintf("[%s] %s", $params['emailPrefix'], $subject) : $subject;
 			$mail->msgHTML($message);
 			$mail->AltBody = self::html2text($message);
+			
+			if($params['priorityHigh'])
+			{
+				$mail->Priority = 1;
+				$mail->AddCustomHeader("X-MSMail-Priority: High");
+				$mail->AddCustomHeader("Importance: High");
+			}
+			elseif($params['priorityMedium'])
+			{
+				$mail->Priority = 3;
+				$mail->AddCustomHeader("X-MSMail-Priority: Medium");
+				$mail->AddCustomHeader("Importance: Medium");
+			}
+			elseif($params['priorityLow'])
+			{
+				$mail->Priority = 5;
+				$mail->AddCustomHeader("X-MSMail-Priority: Low");
+				$mail->AddCustomHeader("Importance: Low");
+			}
+			
 			
 			if(!empty($receivers) && is_array($receivers))
 			{
@@ -78,13 +98,13 @@ class YsUtil
 			}
 			
 			// log sent mail
-			if($smtpParams['logSentMail'])
+			if($params['logSentMail'])
 			{
-				self::logSentMail($mail, $smtpParams['mailLogPath']);
+				self::logSentMail($mail, $params['mailLogPath']);
 			}
 			
 			// if not block, can send email out
-			if($smtpParams['blockSendMail'] !== true)
+			if($params['blockSendMail'] !== true)
 			{
 				if(!($mail->Send()))
 				{
