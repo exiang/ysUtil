@@ -6,5 +6,5 @@ php:
 
 install:
   - composer install --no-interaction
-
+before_script: phpenv config-add myphp.ini
 script: phpunit
