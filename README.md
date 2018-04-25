@@ -1,4 +1,6 @@
 # ysUtil
+![travis build status](https://travis-ci.org/exiang/ysUtil.svg?branch=master)
+
 an utilities class for yii framework
 
 ## Composer
