@@ -4,7 +4,7 @@ use Exiang\YsUtil\YsUtil;
  
 class YsUtilTest extends PHPUnit_Framework_TestCase {
  
-    public function testYsSendMail()
+    /*public function testYsSendMail()
     {
         $ysUtil = new ysUtil;
         $receivers[] = array('email'=>'exiang83@gmail.com', 'name'=>'Allen Tan');
@@ -15,14 +15,14 @@ class YsUtilTest extends PHPUnit_Framework_TestCase {
 		$smtpParams['smtpPort'] = '587'; 
 		$smtpParams['smtpAuth'] = true;
 		$smtpParams['smtpUsername'] = 'AKIAJPZTWSLKXCGWQBOA'; 
-		$smtpParams['smtpPassword'] = 'AvJX5bpsot1AsfgKW/TwAntMhPReN8cka67f2sNXR0tb'; 
+		$smtpParams['smtpPassword'] = ''; 
 		$smtpParams['smtpSenderEmail'] = 'exiang83@yahoo.com'; 
 		$smtpParams['smtpSenderName'] = 'Tan Yee Siang'; 
 		$smtpParams['emailPrefix'] = 'YsUtilTest'; 
 		$smtpParams['blockSendMail'] = false; 
 		$smtpParams['logSentMail'] = false;
         $this->assertTrue($ysUtil->sendMail($receivers, $subject, $message, $smtpParams));
-    }
+    }*/
 
     public function testYsUtilHasCheese()
     {
