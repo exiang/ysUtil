@@ -76,19 +76,19 @@ class YsUtil
 			$mail->msgHTML($message);
 			$mail->AltBody = self::html2text($message);
 			
-			if($params['priorityHigh'])
+			if(isset($params['priorityHigh']))
 			{
 				$mail->Priority = 1;
 				$mail->AddCustomHeader("X-MSMail-Priority: High");
 				$mail->AddCustomHeader("Importance: High");
 			}
-			elseif($params['priorityMedium'])
+			elseif(isset($params['priorityMedium']))
 			{
 				$mail->Priority = 3;
 				$mail->AddCustomHeader("X-MSMail-Priority: Medium");
 				$mail->AddCustomHeader("Importance: Medium");
 			}
-			elseif($params['priorityLow'])
+			elseif(isset($params['priorityLow']))
 			{
 				$mail->Priority = 5;
 				$mail->AddCustomHeader("X-MSMail-Priority: Low");
