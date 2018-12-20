@@ -429,7 +429,8 @@ class YsUtil
 	
 	public function listDir($dir, $recur = true)
 	{
-		$file_list = '';
+		$file_list = array();
+		$stack = array();
 
 		if($recur)
 		{
