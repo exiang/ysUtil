@@ -1,6 +1,7 @@
 <?php 
 namespace Exiang\YsUtil;
-use Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class YsUtil 
 {
@@ -52,7 +53,7 @@ class YsUtil
 	{
 		try
 		{
-			$mail = new \PHPMailer;
+			$mail = new PHPMailer(true);
 			$mail->CharSet = "utf-8";
 			$mail->IsHTML(true);
 			$mail->IsSMTP();
@@ -65,11 +66,11 @@ class YsUtil
 			$mail->Password = $params['smtpPassword'];
 			if(!empty($sendOnBehalf)) 
 			{
-				$mail->SetFrom($sendOnBehalf, $sendOnBehalf);
+				$mail->setFrom($sendOnBehalf, $sendOnBehalf);
 			}
 			else
 			{
-				$mail->SetFrom($params['smtpSenderEmail'], $params['smtpSenderName']);
+				$mail->setFrom($params['smtpSenderEmail'], $params['smtpSenderName']);
 			}
 			
 			$mail->Subject = !empty($params['emailPrefix']) ? sprintf("[%s] %s", $params['emailPrefix'], $subject) : $subject;
@@ -120,7 +121,7 @@ class YsUtil
 			}
 			else
 			{
-				throw new \Exception('Invalid receivers data format');
+				throw new Exception('Invalid receivers data format');
 			}
 			
 			// log sent mail
@@ -132,7 +133,7 @@ class YsUtil
 			// if not block, can send email out
 			if($params['blockSendMail'] !== true)
 			{
-				if(!($mail->Send()))
+				if(!($mail->send()))
 				{
 					return $mail->ErrorInfo;
 				}
