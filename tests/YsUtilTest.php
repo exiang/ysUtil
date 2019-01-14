@@ -4,25 +4,27 @@ use Exiang\YsUtil\YsUtil;
  
 class YsUtilTest extends PHPUnit_Framework_TestCase {
  
-    /*public function testYsSendMail()
+    public function testYsSendMail()
     {
         $ysUtil = new ysUtil;
         $receivers[] = array('email'=>'exiang83@gmail.com', 'name'=>'Allen Tan');
         $subject = 'Test email from YsUtilTest';
         $message = "This is the body message";
-        $smtpParams['smtpHost'] = 'email-smtp.us-east-1.amazonaws.com';
+        $smtpParams['smtpHost'] = 'smtp.mandrillapp.com';
 		$smtpParams['smtpSecure']  = 'tls';
 		$smtpParams['smtpPort'] = '587'; 
 		$smtpParams['smtpAuth'] = true;
-		$smtpParams['smtpUsername'] = 'AKIAJPZTWSLKXCGWQBOA'; 
+        $smtpParams['smtpUsername'] = 'cloud@mymagic.my'; 
+        // note: please insert password here and remove before commit to repo!
 		$smtpParams['smtpPassword'] = ''; 
-		$smtpParams['smtpSenderEmail'] = 'exiang83@yahoo.com'; 
+		$smtpParams['smtpSenderEmail'] = 'noreply@mymagic.my'; 
 		$smtpParams['smtpSenderName'] = 'Tan Yee Siang'; 
 		$smtpParams['emailPrefix'] = 'YsUtilTest'; 
 		$smtpParams['blockSendMail'] = false; 
-		$smtpParams['logSentMail'] = false;
+        $smtpParams['logSentMail'] = false;
+        
         $this->assertTrue($ysUtil->sendMail($receivers, $subject, $message, $smtpParams));
-    }*/
+    }
 
     public function testYsUtilHasCheese()
     {
