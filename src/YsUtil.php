@@ -66,11 +66,11 @@ class YsUtil
 			$mail->Password = $params['smtpPassword'];
 			if(!empty($sendOnBehalf)) 
 			{
-				$mail->SetFrom($sendOnBehalf, $sendOnBehalf);
+				$mail->setFrom($sendOnBehalf, $sendOnBehalf);
 			}
 			else
 			{
-				$mail->SetFrom($params['smtpSenderEmail'], $params['smtpSenderName']);
+				$mail->setFrom($params['smtpSenderEmail'], $params['smtpSenderName']);
 			}
 			
 			$mail->Subject = !empty($params['emailPrefix']) ? sprintf("[%s] %s", $params['emailPrefix'], $subject) : $subject;
@@ -133,7 +133,7 @@ class YsUtil
 			// if not block, can send email out
 			if($params['blockSendMail'] !== true)
 			{
-				if(!($mail->Send()))
+				if(!($mail->send()))
 				{
 					return $mail->ErrorInfo;
 				}
