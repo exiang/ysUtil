@@ -441,7 +441,7 @@ class YsUtil
 				$current_dir = array_pop($stack);
 				if($dh = @opendir($current_dir))
 				{
-					while(($file = readdir($dh)) !== false)
+					while(false != ($file = readdir($dh)))
 					{
 						// exclude any filename begin with ".", could be a up one directory, a .svn, a .htaccess
 						if($file{0} !== '.' && $file != 'Thumbs.db')
@@ -463,7 +463,7 @@ class YsUtil
 		else
 		{
 			$handle = opendir($dir);
-			while(false !== ($file = readdir($handle)))
+			while(false != ($file = readdir($handle)))
 			{
 				if( $file{0} !== '.' && $file != 'Thumbs.db')
 				{
