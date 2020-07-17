@@ -397,14 +397,7 @@ class YsUtil
 	
 	public function isEmailAddress($input)
 	{
-		if (preg_match("/[[:alnum:]]+@[[:alnum:]]+\.[[:alnum:]]+/i", $input))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return (filter_var($input, FILTER_VALIDATE_EMAIL));
 	}
 	
 	function getMimeType($filename)
