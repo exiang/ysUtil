@@ -51,6 +51,8 @@ class YsUtilTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($ysUtil->isEmailAddress('email@domain-with-dash.com'));
         $this->assertTrue($ysUtil->isEmailAddress('emailCamel@gmail.com'));
         $this->assertTrue($ysUtil->isEmailAddress('email.dot@gmail.com'));
+        $this->assertTrue($ysUtil->isEmailAddress('email+plus@gmail.com'));
+        $this->assertFalse($ysUtil->isEmailAddress('email.dot@gmail+123.com'));
     }
  
 }
