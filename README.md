@@ -7,3 +7,9 @@ an utilities class for yii framework
 https://packagist.org/packages/exiang/ys-util
 
 ```composer require exiang/ys-util```
+
+## Test
+```
+cd tests
+../vendor/phpunit/phpunit/phpunit YsUtilTest.php
+```

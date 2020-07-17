@@ -397,7 +397,7 @@ class YsUtil
 	
 	public function isEmailAddress($input)
 	{
-		return (filter_var($input, FILTER_VALIDATE_EMAIL));
+		return filter_var($input, FILTER_VALIDATE_EMAIL)?true:false;
 	}
 	
 	function getMimeType($filename)

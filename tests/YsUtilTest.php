@@ -4,7 +4,7 @@ use Exiang\YsUtil\YsUtil;
  
 class YsUtilTest extends PHPUnit_Framework_TestCase {
  
-    public function testYsSendMail()
+    /*public function testYsSendMail()
     {
         $ysUtil = new ysUtil;
         $receivers[] = array('email'=>'exiang83@gmail.com', 'name'=>'Allen Tan');
@@ -24,7 +24,7 @@ class YsUtilTest extends PHPUnit_Framework_TestCase {
         $smtpParams['logSentMail'] = false;
         
         $this->assertTrue($ysUtil->sendMail($receivers, $subject, $message, $smtpParams));
-    }
+    }*/
 
     public function testYsUtilHasCheese()
     {
@@ -35,13 +35,22 @@ class YsUtilTest extends PHPUnit_Framework_TestCase {
     public function testYsUtilHtml2Text()
     {
         $ysUtil = new ysUtil;
-        $this->assertEquals($ysUtil->html2text('Hello, &quot;<b>world</b>&quot;'), 'Hello, "WORLD"');
+        $this->assertSame($ysUtil->html2text('Hello, &quot;<b>world</b>&quot;'), 'Hello, "WORLD"');
     }
     
     public function testYsUtilTimezone2Offset()
     {
         $ysUtil = new ysUtil;
-        $this->assertEquals($ysUtil->timezone2offset('Asia/Kuala_Lumpur'), '+08:00');
+        $this->assertSame($ysUtil->timezone2offset('Asia/Kuala_Lumpur'), '+08:00');
+    }
+    
+    public function testYsUtilIsEmailAddress()
+    {
+        $ysUtil = new ysUtil;
+        $this->assertTrue($ysUtil->isEmailAddress('email@gmail.com'));
+        $this->assertTrue($ysUtil->isEmailAddress('email@domain-with-dash.com'));
+        $this->assertTrue($ysUtil->isEmailAddress('emailCamel@gmail.com'));
+        $this->assertTrue($ysUtil->isEmailAddress('email.dot@gmail.com'));
     }
  
 }
