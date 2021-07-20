@@ -13,3 +13,6 @@ https://packagist.org/packages/exiang/ys-util
 cd tests
 ../vendor/phpunit/phpunit/phpunit YsUtilTest.php
 ```
+
+## Documentation
+Please refer here at https://app.gitbook.com/@exiang/s/yeebase/others/ysutil
