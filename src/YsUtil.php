@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Exiang\YsUtil;
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -87,6 +87,11 @@ class YsUtil
                 $mail->AddCustomHeader("Importance: Low");
             }
             
+            // to support other headers, eg: mailgun bulk send
+            foreach ($params['headerLines'] as $headerLineKey => $headerLineValue) {
+                $headerLine = $mail->headerLine($headerLineKey, $headerLineValue);
+                $mail->addCustomHeader($headerLine);
+            }
             
             if (!empty($receivers) && is_array($receivers)) {
                 foreach ($receivers as $receiver) {
